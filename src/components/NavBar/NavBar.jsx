@@ -43,28 +43,34 @@ function NavBar() {
               margin='0 50px'
               variant='h5'
               noWrap
-              component='div'
+              component={Link}
+              color='white'
+              to='/home'
               sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
             >
-              <Link to='/'>Home</Link>
+              Home
             </Typography>
             <Typography
               margin='0 50px'
               variant='h5'
               noWrap
-              component='div'
+              component={Link}
+              color='white'
+              to='/pokedex'
               sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
             >
-              <Link to='/pokedex'>PokeDex</Link>
+              Pokedex
             </Typography>
             <Typography
               margin='0 50px'
               variant='h5'
               noWrap
-              component='div'
+              component={Link}
+              color='white'
+              to='/profile'
               sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
             >
-              <Link to='/profile'>Profile</Link>
+              Profile
             </Typography>
             <IconButton size='large' aria-label='search' color='inherit'>
               <SearchIcon />
