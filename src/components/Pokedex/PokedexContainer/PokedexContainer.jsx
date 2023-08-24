@@ -5,6 +5,7 @@ import PokemonList from '../PokemonList/PokemonList';
 import PokemonCard from '../PokemonCard/PokemonCard';
 import { Outlet } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
+import PokedexNavigation from '../PokedexNavigation/PokedexNavigation';
 
 function PokedexContainer() {
   const [pokeData, SetPokeData] = useState({});
@@ -99,6 +100,7 @@ function PokedexContainer() {
   return (
     <>
       <div> Hello From PokeDexContainer</div>
+      <PokedexNavigation />
       {Object.keys(pokeData).length !== 0 ? (
         <PokemonList pokeData={pokeData} />
       ) : (
