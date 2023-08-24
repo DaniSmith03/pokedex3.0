@@ -45,7 +45,7 @@ function NavBar() {
               noWrap
               component={Link}
               color='white'
-              to='/home'
+              to='/'
               sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
             >
               Home
