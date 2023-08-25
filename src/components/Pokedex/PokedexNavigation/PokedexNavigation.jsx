@@ -10,9 +10,11 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 // import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import FiltersModal from './FiltersModal';
 
 function PokedexNavigation({ setFilter, setTypeFilter }) {
   const [isChecked, setIsChecked] = useState({
@@ -90,6 +92,14 @@ function PokedexNavigation({ setFilter, setTypeFilter }) {
     return match;
   };
 
+  //Handle Opening MoreFilters Modal on button click
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleMoreFilters = () => {
+    console.log(' more filters button clicked');
+    setModalOpen(true);
+  };
+
+  //Return JSX for pokemonNavigation
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
@@ -109,8 +119,12 @@ function PokedexNavigation({ setFilter, setTypeFilter }) {
             component='div'
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            Pokedex Navigation
           </Typography>
+          <Button variant='contained' onClick={handleMoreFilters}>
+            More Filters
+          </Button>
+          <FiltersModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
           <Search onChange={handleSearch}>
             <SearchIconWrapper>
               <SearchIcon />
