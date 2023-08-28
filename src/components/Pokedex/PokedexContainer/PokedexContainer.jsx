@@ -122,15 +122,23 @@ function PokedexContainer() {
   console.log('hello' + Object.keys(pokeData).length);
   console.log(pokeData);
 
+  //JSX to return pokedex elements
   return (
     <>
       <div> Hello From PokeDexContainer</div>
-      <PokedexNavigation setFilter={setFilter} setTypeFilter={setTypeFilter} />
+      <PokedexNavigation
+        setFilter={setFilter}
+        setTypeFilter={setTypeFilter}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
+      />
       {Object.keys(pokeData).length !== 0 ? (
         <PokemonList
           filter={filter}
           typeFilter={typeFilter}
           pokeData={pokeData}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
         />
       ) : (
         <Box>

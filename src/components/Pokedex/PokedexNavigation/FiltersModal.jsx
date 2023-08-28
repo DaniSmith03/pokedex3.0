@@ -17,8 +17,30 @@ const style = {
   color: 'black',
 };
 
-function FiltersModal({ modalOpen, setModalOpen }) {
+function FiltersModal({ modalOpen, setModalOpen, isChecked, setIsChecked }) {
   const handleClose = () => setModalOpen(false);
+
+  const handleCheck = (event) => {
+    const typeObj = {};
+    const { value, checked } = event.target;
+    console.log(value, checked);
+    console.log(isChecked);
+    setIsChecked((isChecked[value] = checked));
+
+    console.log('value of', isChecked);
+
+    Object.keys(isChecked).map((key) => {
+      if (isChecked[key] === true) {
+        typeObj[key] = true;
+      }
+      console.log(typeObj);
+      return typeObj;
+    });
+    // setIsChecked(typeArr)
+    console.log('Final Check', typeObj);
+
+    setIsChecked(typeObj);
+  };
 
   return (
     <React.Fragment>
@@ -32,9 +54,191 @@ function FiltersModal({ modalOpen, setModalOpen }) {
           <Typography id='modal-modal-title' variant='h6' component='h2'>
             Filter By Type
           </Typography>
-          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Box width='500px' height='60px'>
+            {/* <Box width='350px' height='55px' className={classes.form}> */}
+            <div>
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='normal'
+                checked={isChecked.normal}
+                onChange={handleCheck}
+              />
+              Normal
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='fighting'
+                checked={isChecked.fighting}
+                onChange={handleCheck}
+              />
+              Fighting
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='flying'
+                checked={isChecked.flying}
+                onChange={handleCheck}
+              />
+              Flying
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='poison'
+                checked={isChecked.poison}
+                onChange={handleCheck}
+              />
+              Poison
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='ground'
+                checked={isChecked.ground}
+                onChange={handleCheck}
+              />
+              Ground
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='rock'
+                checked={isChecked.rock}
+                onChange={handleCheck}
+              />
+              Rock
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='bug'
+                checked={isChecked.bug}
+                onChange={handleCheck}
+              />
+              Bug
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='ghost'
+                checked={isChecked.ghost}
+                onChange={handleCheck}
+              />
+              Ghost
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='steel'
+                checked={isChecked.steel}
+                onChange={handleCheck}
+              />
+              Steel
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='fire'
+                checked={isChecked.fire}
+                onChange={handleCheck}
+              />
+              Fire
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='water'
+                checked={isChecked.water}
+                onChange={handleCheck}
+              />
+              Water
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='grass'
+                checked={isChecked.grass}
+                onChange={handleCheck}
+              />
+              Grass
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='electric'
+                checked={isChecked.electric}
+                onChange={handleCheck}
+              />
+              Electric
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='psychic'
+                checked={isChecked.psychic}
+                onChange={handleCheck}
+              />
+              Psychic
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='ice'
+                checked={isChecked.ice}
+                onChange={handleCheck}
+              />
+              Ice
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='dragon'
+                checked={isChecked.dragon}
+                onChange={handleCheck}
+              />
+              Dragon
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='dark'
+                checked={isChecked.dark}
+                onChange={handleCheck}
+              />
+              Dark
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='fairy'
+                checked={isChecked.fairy}
+                onChange={handleCheck}
+              />
+              Fairy
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='unknown'
+                checked={isChecked.unknown}
+                onChange={handleCheck}
+              />
+              Unknown
+              <input
+                type='checkbox'
+                id='type'
+                name='type'
+                value='shadow'
+                checked={isChecked.shadow}
+                onChange={handleCheck}
+              />
+              Shadow
+            </div>
+          </Box>
         </Box>
       </Modal>
     </React.Fragment>
