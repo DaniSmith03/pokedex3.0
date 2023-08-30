@@ -5,10 +5,36 @@ import PokemonList from '../PokemonList/PokemonList';
 import PokemonCard from '../PokemonCard/PokemonCard';
 import { Outlet } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
+import PokedexNavigation from '../PokedexNavigation/PokedexNavigation';
 
 function PokedexContainer() {
+  //Define useState Variables.
   const [pokeData, SetPokeData] = useState({});
   const [pokeDetails, setPokeDetails] = useState(null);
+  const [filter, setFilter] = useState('');
+  const [typeFilter, setTypeFilter] = [];
+  const [isChecked, setIsChecked] = useState({
+    normal: false,
+    fighting: false,
+    flying: false,
+    poison: false,
+    ground: false,
+    rock: false,
+    bug: false,
+    ghost: false,
+    steel: false,
+    fire: false,
+    water: false,
+    grass: false,
+    electric: false,
+    physic: false,
+    ice: false,
+    dragon: false,
+    dark: false,
+    fairy: false,
+    unknown: false,
+    shadow: false,
+  });
 
   useEffect(() => {
     //initialize an object to store pokemon data we want to extract
@@ -96,11 +122,24 @@ function PokedexContainer() {
   console.log('hello' + Object.keys(pokeData).length);
   console.log(pokeData);
 
+  //JSX to return pokedex elements
   return (
     <>
       <div> Hello From PokeDexContainer</div>
+      <PokedexNavigation
+        setFilter={setFilter}
+        setTypeFilter={setTypeFilter}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
+      />
       {Object.keys(pokeData).length !== 0 ? (
-        <PokemonList pokeData={pokeData} />
+        <PokemonList
+          filter={filter}
+          typeFilter={typeFilter}
+          pokeData={pokeData}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+        />
       ) : (
         <Box>
           <Typography>Loading Pokedex</Typography>
