@@ -20,14 +20,13 @@ const style = {
 function FiltersModal({ modalOpen, setModalOpen, isChecked, setIsChecked }) {
   const handleClose = () => setModalOpen(false);
 
+  //function to get and add the opposite value of the checked input to the isChecked array of pokemon data types by mapping through
   const handleCheck = (event) => {
     const typeObj = {};
     const { value, checked } = event.target;
     console.log(value, checked);
     console.log(isChecked);
     setIsChecked((isChecked[value] = checked));
-
-    console.log('value of', isChecked);
 
     Object.keys(isChecked).map((key) => {
       if (isChecked[key] === true) {
@@ -36,9 +35,6 @@ function FiltersModal({ modalOpen, setModalOpen, isChecked, setIsChecked }) {
       console.log(typeObj);
       return typeObj;
     });
-    // setIsChecked(typeArr)
-    console.log('Final Check', typeObj);
-
     setIsChecked(typeObj);
   };
 
