@@ -36,18 +36,18 @@ function PokemonList({ pokeData, filter, isChecked, handlePokemonCardOpen }) {
       pokemon.name.includes(filter) &&
       evalTypes(pokemon.types) === true && (
         <Grid item xs={2} md={2} lg={2} key={pokemon.id}>
-          <Link to={`/pokedex/${pokemon.id}`}>
-            <Card variant='outlined'>
-              <CardActionArea onClick={() => handlePokemonCardOpen(pokemon.id)}>
-                <Avatar
-                  src={pokemon.sprite}
-                  alt={pokemon.name}
-                  sx={{ width: 56, height: 56 }}
-                />
-                <Typography>{pokemon.name}</Typography>
-              </CardActionArea>
-            </Card>
-          </Link>
+          {/* <Link to={`/pokedex/${pokemon.id}`}> */}
+          <Card variant='outlined'>
+            <CardActionArea onClick={() => handlePokemonCardOpen(pokemon.id)}>
+              <Avatar
+                src={pokemon.sprite}
+                alt={pokemon.name}
+                sx={{ width: 56, height: 56 }}
+              />
+              <Typography>{pokemon.name}</Typography>
+            </CardActionArea>
+          </Card>
+          {/* </Link> */}
         </Grid>
       )
     );

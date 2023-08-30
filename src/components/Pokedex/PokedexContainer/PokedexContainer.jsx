@@ -45,7 +45,7 @@ function PokedexContainer() {
 
     const getTheData = async () => {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=24`
+        `https://pokeapi.co/api/v2/pokemon?limit=1010`
       );
       const pokemonDataObj = response.data.results;
 
@@ -124,6 +124,7 @@ function PokedexContainer() {
   console.log(pokeData);
 
   //Pokedex card open function:
+
   const handlePokemonCardOpen = (pokemonId) => {
     setPokeDetails(pokeData[pokemonId]);
     setPokemonCardOpen(true);
@@ -154,11 +155,13 @@ function PokedexContainer() {
           <CircularProgress color='inherit' />
         </Box>
       )}
-      <PokemonCard
-        pokemonCardOpen={pokemonCardOpen}
-        setPokemonCardOpen={setPokemonCardOpen}
-        pokeDetails={pokeDetails}
-      />
+      {pokeDetails !== null && (
+        <PokemonCard
+          pokemonCardOpen={pokemonCardOpen}
+          setPokemonCardOpen={setPokemonCardOpen}
+          pokeDetails={pokeDetails}
+        />
+      )}
 
       <Outlet />
     </>
