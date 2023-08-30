@@ -13,6 +13,7 @@ function PokedexContainer() {
   const [pokeDetails, setPokeDetails] = useState(null);
   const [filter, setFilter] = useState('');
   const [typeFilter, setTypeFilter] = [];
+  const [pokemonCardOpen, setPokemonCardOpen] = useState(false);
   const [isChecked, setIsChecked] = useState({
     normal: false,
     fighting: false,
@@ -139,6 +140,7 @@ function PokedexContainer() {
           pokeData={pokeData}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
+          setPokemonCardOpen={setPokemonCardOpen}
         />
       ) : (
         <Box>
@@ -146,6 +148,10 @@ function PokedexContainer() {
           <CircularProgress color='inherit' />
         </Box>
       )}
+      <PokemonCard
+        pokemonCardOpen={pokemonCardOpen}
+        setPokemonCardOpen={setPokemonCardOpen}
+      />
 
       <Outlet />
     </>
