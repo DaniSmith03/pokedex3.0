@@ -123,6 +123,12 @@ function PokedexContainer() {
   console.log('hello' + Object.keys(pokeData).length);
   console.log(pokeData);
 
+  //Pokedex card open function:
+  const handlePokemonCardOpen = (pokemonId) => {
+    setPokeDetails(pokeData[pokemonId]);
+    setPokemonCardOpen(true);
+  };
+
   //JSX to return pokedex elements
   return (
     <>
@@ -140,7 +146,7 @@ function PokedexContainer() {
           pokeData={pokeData}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
-          setPokemonCardOpen={setPokemonCardOpen}
+          handlePokemonCardOpen={handlePokemonCardOpen}
         />
       ) : (
         <Box>
@@ -151,6 +157,7 @@ function PokedexContainer() {
       <PokemonCard
         pokemonCardOpen={pokemonCardOpen}
         setPokemonCardOpen={setPokemonCardOpen}
+        pokeDetails={pokeDetails}
       />
 
       <Outlet />
