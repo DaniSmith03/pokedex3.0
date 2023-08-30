@@ -13,6 +13,7 @@ function PokedexContainer() {
   const [pokeDetails, setPokeDetails] = useState(null);
   const [filter, setFilter] = useState('');
   const [typeFilter, setTypeFilter] = [];
+  const [pokemonCardOpen, setPokemonCardOpen] = useState(false);
   const [isChecked, setIsChecked] = useState({
     normal: false,
     fighting: false,
@@ -122,6 +123,12 @@ function PokedexContainer() {
   console.log('hello' + Object.keys(pokeData).length);
   console.log(pokeData);
 
+  //Pokedex card open function:
+  const handlePokemonCardOpen = (pokemonId) => {
+    setPokeDetails(pokeData[pokemonId]);
+    setPokemonCardOpen(true);
+  };
+
   //JSX to return pokedex elements
   return (
     <>
@@ -139,6 +146,7 @@ function PokedexContainer() {
           pokeData={pokeData}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
+          handlePokemonCardOpen={handlePokemonCardOpen}
         />
       ) : (
         <Box>
@@ -146,6 +154,11 @@ function PokedexContainer() {
           <CircularProgress color='inherit' />
         </Box>
       )}
+      <PokemonCard
+        pokemonCardOpen={pokemonCardOpen}
+        setPokemonCardOpen={setPokemonCardOpen}
+        pokeDetails={pokeDetails}
+      />
 
       <Outlet />
     </>
