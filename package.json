@@ -11,7 +11,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "node server.js"
+    "start": "serve dist"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -26,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "react-window": "^1.8.9",
+    "serve": "^14.2.1",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
