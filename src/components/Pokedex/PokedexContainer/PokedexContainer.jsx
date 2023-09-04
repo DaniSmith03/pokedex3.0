@@ -45,7 +45,7 @@ function PokedexContainer() {
 
     const getTheData = async () => {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=1010`
+        `https://pokeapi.co/api/v2/pokemon?limit=30`
       );
       const pokemonDataObj = response.data.results;
 
@@ -116,6 +116,41 @@ function PokedexContainer() {
         // console.log(pokemonDetailsObj);
         return pokemonDetailsObj;
       });
+      const moreDetails = await Promise.all(
+        pokemonDataObj.map((pokemon) => {
+          return axios.get(
+            `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
+          );
+        })
+      );
+      console.log(moreDetails);
+
+      moreDetails.forEach((poke, index) => {
+        const description = poke.data.flavor_text_entries[0].flavor_text;
+        // console.log(description);
+
+        let evolvesFrom;
+        poke.data.evolves_from_species
+          ? (evolvesFrom = poke.data.evolves_from_species.name)
+          : (evolvesFrom = null);
+        // console.log(evolvesFrom);
+
+        let habitat;
+        poke.data.habitat
+          ? (habitat = poke.data.habitat.name)
+          : (habitat = null);
+
+        const isMythical = poke.data.is_mythical;
+
+        const isLegendary = poke.data.is_legendary;
+
+        pokemonDetailsObj[index + 1].description = description;
+        pokemonDetailsObj[index + 1].evolves_from = evolvesFrom;
+        pokemonDetailsObj[index + 1].habitat = habitat;
+        pokemonDetailsObj[index + 1].is_mythical = isMythical;
+        pokemonDetailsObj[index + 1].isLegendary = isLegendary;
+      });
+
       SetPokeData(pokemonDetailsObj);
     };
     getTheData();
