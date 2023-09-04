@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "18.16.0"
+  },
   "name": "pokedex-3-0",
   "private": true,
   "version": "0.0.0",
