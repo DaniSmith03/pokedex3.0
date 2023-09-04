@@ -45,7 +45,7 @@ function PokedexContainer() {
 
     const getTheData = async () => {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=30`
+        `https://pokeapi.co/api/v2/pokemon?limit=900`
       );
       const pokemonDataObj = response.data.results;
 
@@ -117,38 +117,53 @@ function PokedexContainer() {
         return pokemonDetailsObj;
       });
       const moreDetails = await Promise.all(
-        pokemonDataObj.map((pokemon) => {
-          return axios.get(
-            `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
-          );
+        pokemonDataObj.map(async (pokemon) => {
+          try {
+            const response = await axios.get(
+              `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
+            );
+            return response.data; // Assuming you want to return the data
+          } catch (error) {
+            console.error(
+              `Error fetching data for ${pokemon.name}: ${error.message}`
+            );
+            return null; // or handle the error in another way, e.g., return a default value
+          }
         })
       );
-      console.log(moreDetails);
 
-      moreDetails.forEach((poke, index) => {
-        const description = poke.data.flavor_text_entries[0].flavor_text;
+      // Filter out the null values (failed requests)
+      const successfulResponses = moreDetails.filter((data) => data !== null);
+
+      // Now, 'successfulResponses' contains only the successful responses, and you can continue using them.
+
+      console.log(successfulResponses);
+
+      successfulResponses.forEach((poke, index) => {
+        let description;
+        poke.flavor_text_entries
+          ? (description = poke.flavor_text_entries[0].flavor_text)
+          : (description = 'No Description Available');
         // console.log(description);
 
         let evolvesFrom;
-        poke.data.evolves_from_species
-          ? (evolvesFrom = poke.data.evolves_from_species.name)
+        poke.evolves_from_species
+          ? (evolvesFrom = poke.evolves_from_species.name)
           : (evolvesFrom = null);
         // console.log(evolvesFrom);
 
         let habitat;
-        poke.data.habitat
-          ? (habitat = poke.data.habitat.name)
-          : (habitat = null);
+        poke.habitat ? (habitat = poke.habitat.name) : (habitat = null);
 
-        const isMythical = poke.data.is_mythical;
+        const isMythical = poke.is_mythical;
 
-        const isLegendary = poke.data.is_legendary;
+        const isLegendary = poke.is_legendary;
 
-        pokemonDetailsObj[index + 1].description = description;
-        pokemonDetailsObj[index + 1].evolves_from = evolvesFrom;
-        pokemonDetailsObj[index + 1].habitat = habitat;
-        pokemonDetailsObj[index + 1].is_mythical = isMythical;
-        pokemonDetailsObj[index + 1].isLegendary = isLegendary;
+        pokemonDetailsObj[poke.id].description = description;
+        pokemonDetailsObj[poke.id].evolves_from = evolvesFrom;
+        pokemonDetailsObj[poke.id].habitat = habitat;
+        pokemonDetailsObj[poke.id].is_mythical = isMythical;
+        pokemonDetailsObj[poke.id].isLegendary = isLegendary;
       });
 
       SetPokeData(pokemonDetailsObj);
@@ -168,7 +183,6 @@ function PokedexContainer() {
   //JSX to return pokedex elements
   return (
     <>
-      <div> Hello From PokeDexContainer</div>
       <PokedexNavigation
         setFilter={setFilter}
         setTypeFilter={setTypeFilter}

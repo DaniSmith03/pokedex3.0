@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Card, Avatar, Typography, CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import './ListStyle.css';
 
 function PokemonList({ pokeData, filter, isChecked, handlePokemonCardOpen }) {
   //function to evaluate which pokemon types to display based on the data in the isChecked obj
@@ -35,16 +36,29 @@ function PokemonList({ pokeData, filter, isChecked, handlePokemonCardOpen }) {
       //Takes the information from the pokeData prop and created a grid item containing a card that holds the pokemon sprite and pokemon name.
       pokemon.name.includes(filter) &&
       evalTypes(pokemon.types) === true && (
-        <Grid item xs={2} md={2} lg={2} key={pokemon.id}>
+        <Grid item key={pokemon.id}>
           {/* <Link to={`/pokedex/${pokemon.id}`}> */}
-          <Card variant='outlined'>
+          <Card
+            sx={{
+              border: 2,
+              borderColor: 'red',
+              borderRadius: 50,
+              width: 130,
+              height: 130,
+              // marginLeft: 20,
+              // marginRight: 20,
+            }}
+            variant='outlined'
+          >
             <CardActionArea onClick={() => handlePokemonCardOpen(pokemon.id)}>
-              <Avatar
-                src={pokemon.sprite}
-                alt={pokemon.name}
-                sx={{ width: 56, height: 56 }}
-              />
-              <Typography>{pokemon.name}</Typography>
+              <div className='cardDiv'>
+                <Avatar
+                  src={pokemon.sprite}
+                  alt={pokemon.name}
+                  sx={{ width: 80, height: 75 }}
+                />
+                <Typography>{pokemon.name}</Typography>
+              </div>
             </CardActionArea>
           </Card>
           {/* </Link> */}
@@ -56,7 +70,12 @@ function PokemonList({ pokeData, filter, isChecked, handlePokemonCardOpen }) {
   return (
     <>
       <Box>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          sx={{ marginTop: 5 }}
+          container
+          rowSpacing={2}
+          columnSpacing={{ xs: 2, sm: 2, md: 2, lg: 2 }}
+        >
           {pokedexCard}
         </Grid>
       </Box>

@@ -28,9 +28,9 @@ function NavBar() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position='static'>
+        <AppBar position='static' sx={{ backgroundColor: 'blue' }}>
           <StyledToolbar>
-            <IconButton
+            {/* <IconButton
               size='large'
               edge='start'
               color='inherit'
@@ -38,7 +38,7 @@ function NavBar() {
               sx={{ mr: 2 }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography
               margin='0 50px'
               variant='h5'
@@ -72,7 +72,7 @@ function NavBar() {
             >
               Profile
             </Typography>
-            <IconButton size='large' aria-label='search' color='inherit'>
+            {/* <IconButton size='large' aria-label='search' color='inherit'>
               <SearchIcon />
             </IconButton>
             <IconButton
@@ -82,7 +82,7 @@ function NavBar() {
               color='inherit'
             >
               <MoreIcon />
-            </IconButton>
+            </IconButton> */}
           </StyledToolbar>
         </AppBar>
       </Box>

@@ -1,0 +1,10 @@
+/* .MuiCard-root {
+  border-radius: 50%;
+  border: 
+} */
+.cardDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15%;
+}

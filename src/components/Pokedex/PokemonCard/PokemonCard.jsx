@@ -66,7 +66,12 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
       return (
         <ListItem key={index} component='div' disablePadding>
           <ListItemButton>
-            <ListItemText primary={move} />
+            <ListItemText
+              primaryTypographyProps={{
+                style: { fontSize: '22px', color: 'white' },
+              }}
+              primary={move}
+            />
           </ListItemButton>
         </ListItem>
       );
@@ -131,25 +136,27 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
           </Box>
           <Paper elevation={2}>
             <Box>
-              <Typography sx={style.title}>{description}</Typography>
+              <Typography variant='body1' sx={{ fontWeight: 500 }}>
+                {description}
+              </Typography>
             </Box>
             <Box sx={style.moreDetails}>
               <div className='feature'>
-                <Typography>Height</Typography>
+                <Typography variant='h6'>Height</Typography>
                 <Typography>{height}</Typography>
               </div>
               <div className='feature'>
-                <Typography>Weight</Typography>
+                <Typography variant='h6'>Weight</Typography>
                 <Typography>{weight}</Typography>
               </div>
               <div className='feature'>
-                <Typography>Habitat</Typography>
+                <Typography variant='h6'>Habitat</Typography>
                 <Typography>{habitat}</Typography>
               </div>
             </Box>
             <Box sx={style.moreDetails}>
               <div className='feature'>
-                <Typography>Types</Typography>
+                <Typography variant='h6'>Types</Typography>
                 <div className='types'>
                   {types.map((type) => {
                     return (
@@ -159,7 +166,7 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
                 </div>
               </div>
               <div className='feature'>
-                <Typography>Abilities</Typography>
+                <Typography variant='h6'>Abilities</Typography>
                 <div className='types'>
                   {abilities.map((ability) => {
                     return (
@@ -174,11 +181,11 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
               </div>
             </Box>
             <div className='feature'>
-              <Typography>Moves</Typography>
+              <Typography variant='h6'>Moves</Typography>
               <Box
                 sx={{
-                  width: 300,
-                  height: 50,
+                  width: 200,
+                  height: 40,
                   // maxWidth: 360,
                   bgcolor: 'white',
                   border: 'solid',
@@ -197,6 +204,7 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
               </Box>
             </div>
           </Paper>
+          <Chip label='Favorite' size='small' variant='outlined' />
         </Box>
       </Modal>
     </div>

@@ -17,7 +17,7 @@ export const style = {
     margin: '20',
   },
   title: {
-    color: 'red',
+    color: 'Black',
     textAlign: 'center',
   },
   imgContainer: {
