@@ -14,6 +14,7 @@ function PokedexContainer() {
   const [filter, setFilter] = useState('');
   const [typeFilter, setTypeFilter] = [];
   const [pokemonCardOpen, setPokemonCardOpen] = useState(false);
+  const [loadNum, setLoadNum] = useState(900);
   const [isChecked, setIsChecked] = useState({
     normal: false,
     fighting: false,
@@ -45,7 +46,7 @@ function PokedexContainer() {
 
     const getTheData = async () => {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=900`
+        `https://pokeapi.co/api/v2/pokemon?limit=${loadNum}`
       );
       const pokemonDataObj = response.data.results;
 
@@ -135,8 +136,6 @@ function PokedexContainer() {
       // Filter out the null values (failed requests)
       const successfulResponses = moreDetails.filter((data) => data !== null);
 
-      // Now, 'successfulResponses' contains only the successful responses, and you can continue using them.
-
       console.log(successfulResponses);
 
       successfulResponses.forEach((poke, index) => {
@@ -188,6 +187,7 @@ function PokedexContainer() {
         setTypeFilter={setTypeFilter}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
+        setLoadNum={setLoadNum}
       />
       {Object.keys(pokeData).length !== 0 ? (
         <PokemonList
@@ -197,6 +197,7 @@ function PokedexContainer() {
           isChecked={isChecked}
           setIsChecked={setIsChecked}
           handlePokemonCardOpen={handlePokemonCardOpen}
+          loadNum={loadNum}
         />
       ) : (
         <Box>

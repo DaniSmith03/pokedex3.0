@@ -39,8 +39,8 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
     setPokemonCardOpen(false);
   };
   const { id } = useParams();
-  console.log(id);
-  console.log(pokeDetails);
+  // console.log(id);
+  // console.log(pokeDetails);
   const {
     name,
     height,
@@ -78,8 +78,6 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
     });
   }
 
-  moves.map((move) => console.log(move));
-
   return (
     <div>
       <Modal
@@ -91,7 +89,7 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
         <Box componet='div' sx={style.container}>
           <Paper elevation={3} sx={style.titleContainer}>
             <Typography variant='h3' sx={style.title}>
-              {capitalizeFirst(name)}
+              {capitalizeFirst(name)} #{pokeId}
             </Typography>
           </Paper>
           <Box component='div' sx={style.imgContainer}>
