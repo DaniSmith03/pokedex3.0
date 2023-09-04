@@ -14,6 +14,7 @@ function PokedexContainer() {
   const [filter, setFilter] = useState('');
   const [typeFilter, setTypeFilter] = [];
   const [pokemonCardOpen, setPokemonCardOpen] = useState(false);
+  const [loadNum, setLoadNum] = useState(900);
   const [isChecked, setIsChecked] = useState({
     normal: false,
     fighting: false,
@@ -45,7 +46,7 @@ function PokedexContainer() {
 
     const getTheData = async () => {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=24`
+        `https://pokeapi.co/api/v2/pokemon?limit=${loadNum}`
       );
       const pokemonDataObj = response.data.results;
 
@@ -116,6 +117,54 @@ function PokedexContainer() {
         // console.log(pokemonDetailsObj);
         return pokemonDetailsObj;
       });
+      const moreDetails = await Promise.all(
+        pokemonDataObj.map(async (pokemon) => {
+          try {
+            const response = await axios.get(
+              `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
+            );
+            return response.data; // Assuming you want to return the data
+          } catch (error) {
+            console.error(
+              `Error fetching data for ${pokemon.name}: ${error.message}`
+            );
+            return null; // or handle the error in another way, e.g., return a default value
+          }
+        })
+      );
+
+      // Filter out the null values (failed requests)
+      const successfulResponses = moreDetails.filter((data) => data !== null);
+
+      console.log(successfulResponses);
+
+      successfulResponses.forEach((poke, index) => {
+        let description;
+        poke.flavor_text_entries
+          ? (description = poke.flavor_text_entries[0].flavor_text)
+          : (description = 'No Description Available');
+        // console.log(description);
+
+        let evolvesFrom;
+        poke.evolves_from_species
+          ? (evolvesFrom = poke.evolves_from_species.name)
+          : (evolvesFrom = null);
+        // console.log(evolvesFrom);
+
+        let habitat;
+        poke.habitat ? (habitat = poke.habitat.name) : (habitat = null);
+
+        const isMythical = poke.is_mythical;
+
+        const isLegendary = poke.is_legendary;
+
+        pokemonDetailsObj[poke.id].description = description;
+        pokemonDetailsObj[poke.id].evolves_from = evolvesFrom;
+        pokemonDetailsObj[poke.id].habitat = habitat;
+        pokemonDetailsObj[poke.id].is_mythical = isMythical;
+        pokemonDetailsObj[poke.id].isLegendary = isLegendary;
+      });
+
       SetPokeData(pokemonDetailsObj);
     };
     getTheData();
@@ -124,6 +173,7 @@ function PokedexContainer() {
   console.log(pokeData);
 
   //Pokedex card open function:
+
   const handlePokemonCardOpen = (pokemonId) => {
     setPokeDetails(pokeData[pokemonId]);
     setPokemonCardOpen(true);
@@ -132,12 +182,12 @@ function PokedexContainer() {
   //JSX to return pokedex elements
   return (
     <>
-      <div> Hello From PokeDexContainer</div>
       <PokedexNavigation
         setFilter={setFilter}
         setTypeFilter={setTypeFilter}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
+        setLoadNum={setLoadNum}
       />
       {Object.keys(pokeData).length !== 0 ? (
         <PokemonList
@@ -147,6 +197,7 @@ function PokedexContainer() {
           isChecked={isChecked}
           setIsChecked={setIsChecked}
           handlePokemonCardOpen={handlePokemonCardOpen}
+          loadNum={loadNum}
         />
       ) : (
         <Box>
@@ -154,11 +205,13 @@ function PokedexContainer() {
           <CircularProgress color='inherit' />
         </Box>
       )}
-      <PokemonCard
-        pokemonCardOpen={pokemonCardOpen}
-        setPokemonCardOpen={setPokemonCardOpen}
-        pokeDetails={pokeDetails}
-      />
+      {pokeDetails !== null && (
+        <PokemonCard
+          pokemonCardOpen={pokemonCardOpen}
+          setPokemonCardOpen={setPokemonCardOpen}
+          pokeDetails={pokeDetails}
+        />
+      )}
 
       <Outlet />
     </>

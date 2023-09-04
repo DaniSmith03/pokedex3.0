@@ -9,7 +9,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 500,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -17,7 +17,13 @@ const style = {
   color: 'black',
 };
 
-function FiltersModal({ modalOpen, setModalOpen, isChecked, setIsChecked }) {
+function FiltersModal({
+  modalOpen,
+  setModalOpen,
+  isChecked,
+  setIsChecked,
+  setLoadNum,
+}) {
   const handleClose = () => setModalOpen(false);
 
   //function to get and add the opposite value of the checked input to the isChecked array of pokemon data types by mapping through
@@ -36,6 +42,11 @@ function FiltersModal({ modalOpen, setModalOpen, isChecked, setIsChecked }) {
       return typeObj;
     });
     setIsChecked(typeObj);
+  };
+
+  //set the number to display filter
+  const handleNumChange = (e) => {
+    setLoadNum(e.target.value);
   };
 
   return (
@@ -234,6 +245,17 @@ function FiltersModal({ modalOpen, setModalOpen, isChecked, setIsChecked }) {
               />
               Shadow
             </div>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', margin: 5 }}>
+            <Typography># of Pokemon to Display</Typography>
+            <input
+              style={{ textAlign: 'center', fontSize: 20 }}
+              type='number'
+              min='0'
+              step='100'
+              max='900'
+              onChange={handleNumChange}
+            />
           </Box>
         </Box>
       </Modal>

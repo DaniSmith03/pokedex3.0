@@ -7,7 +7,16 @@ import ProfileStyle from './ProfileStyle';
 function ProfileContainer() {
   return (
     <>
-      <div>Profile Container</div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          fontSize: 30,
+        }}
+      >
+        Profile Feature Coming Soon
+      </div>
       <MyData />
       <MyGames />
       <MyTeams />
