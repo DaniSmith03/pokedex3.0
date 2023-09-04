@@ -15,7 +15,7 @@ function App() {
         <Route element={<NavBar />}>
           <Route path='/' element={<Home />} />
           <Route path='/pokedex' element={<PokedexContainer />}>
-            <Route path=':id' element={<PokemonCard />} />
+            {/* <Route path=':id' element={<PokemonCard />} /> */}
           </Route>
           <Route path='/profile' element={<ProfileContainer />}>
             <Route path='myteams:id' element={<MyTeams />} />
