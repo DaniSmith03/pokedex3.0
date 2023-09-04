@@ -1,10 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PokemonList from './Pokedex/PokemonList/PokemonList';
-import PokemonCard from './Pokedex/PokemonCard/PokemonCard';
 import NavBar from './NavBar/NavBar';
 import Home from './Home/Home';
-import PokedexContainer from './Pokedex/PokedexContainer/pokedexContainer';
+import PokedexContainer from './Pokedex/PokedexContainer/PokedexContainer';
 import MyTeams from './Profile/MyTeams/MyTeams';
 import ProfileContainer from './Profile/ProfileContainer/ProfileContainer';
 import MyPokemon from './Profile/MyPokemon/MyPokemon';
