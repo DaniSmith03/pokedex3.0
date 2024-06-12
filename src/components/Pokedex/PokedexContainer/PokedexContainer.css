@@ -1,20 +1,41 @@
-.pokemon-list-container {
-  max-width: 90%; /* Adjust the maximum width as needed */
+.pokedex-container {
+  max-width: 100%; /* Adjust the maximum width as needed */
   max-height: 70%;
   min-height: 800px;
   margin: 0 auto; /* Center the container */
-  padding: 5%; /* Add padding to the sides */
+
   border: solid white 30px;
-  background-image: url('src/assets/images/pikachu.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 95%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: white;
 }
+
+.pokemon-list-container {
+  height: 600px;
+  display: flex;
+  /* border: 10px solid black; */
+}
+
+.box1 {
+  display: flex;
+  flex-direction: column;
+  background-color: #eddd50;
+  opacity: 95%;
+  width: 60%;
+}
+.box2 {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./src/assets/images/pikachu.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 40%;
+}
+
 .pokeball {
   position: absolute;
   top: 50%;

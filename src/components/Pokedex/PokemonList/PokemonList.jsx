@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Card, Avatar, Typography, CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import './ListStyle.css';
+import { capitalizeFirst } from '../../Helpers';
 
 function PokemonList({
   pokeData,
@@ -44,32 +45,31 @@ function PokemonList({
         //Takes the information from the pokeData prop and created a grid item containing a card that holds the pokemon sprite and pokemon name.
         pokemon.name.includes(filter) &&
         evalTypes(pokemon.types) === true && (
-          <Grid item key={pokemon.id}>
+          <Grid item key={pokemon.id} className='grid'>
             {/* <Link to={`/pokedex/${pokemon.id}`}> */}
             <Card
+              className='card'
               sx={{
-                border: 2,
-                borderColor: 'red',
                 borderRadius: 50,
-                width: 130,
-                height: 130,
-                // marginLeft: 20,
-                // marginRight: 20,
+                width: 90,
+                height: 90,
               }}
               variant='outlined'
+              onClick={() => handlePokemonCardOpen(pokemon.id)}
             >
-              <CardActionArea onClick={() => handlePokemonCardOpen(pokemon.id)}>
-                <div className='cardDiv'>
-                  <Avatar
-                    src={pokemon.sprite}
-                    alt={pokemon.name}
-                    sx={{ width: 80, height: 75 }}
-                  />
-                  <Typography>{pokemon.name}</Typography>
-                </div>
-              </CardActionArea>
+              <div className='cardDiv'>
+                <Avatar
+                  className='avatar'
+                  src={pokemon.sprite}
+                  alt={pokemon.name}
+                  sx={{ width: 60, height: 60 }}
+                />
+              </div>
             </Card>
             {/* </Link> */}
+            <Typography className='pokemonName'>
+              {capitalizeFirst(pokemon.name)}
+            </Typography>
           </Grid>
         )
       );
@@ -77,9 +77,10 @@ function PokemonList({
 
   return (
     <>
-      <Box>
+      <Box sx={{ margin: 8 }}>
         <Grid
-          sx={{ marginTop: 5 }}
+          // sx={{ marginTop: 5 }}
+          // sx={{ marginBottom: 5 }}
           container
           rowSpacing={2}
           columnSpacing={{ xs: 2, sm: 2, md: 2, lg: 2 }}
