@@ -30,7 +30,7 @@
 .box2 {
   display: flex;
   flex-direction: column;
-  background-image: url('./src/assets/images/pikachu.jpg');
+  background-image: url(../images/pikachu.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
