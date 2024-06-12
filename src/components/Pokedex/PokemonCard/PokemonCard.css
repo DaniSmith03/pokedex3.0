@@ -1,0 +1,97 @@
+* {
+  font-family: 'Courier New', Courier, monospace;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+.cardInfo {
+  background-color: rgba(116, 109, 109, 0.478);
+  height: 100%;
+}
+
+.infocard-header h2 {
+  text-align: center;
+  color: black;
+  font-size: 25px;
+}
+.image-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 5px 0;
+}
+
+.image-container div {
+  text-align: center;
+}
+.image-container p {
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
+}
+
+.image-container img {
+  width: 100px;
+  height: 100px;
+}
+
+.details {
+  color: black;
+  display: flex;
+  justify-content: space-around;
+  margin: 5px 0;
+}
+
+.detail-item {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.detail-item h3 {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.detail-item p {
+  margin: 2px 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.types,
+.moves-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chip {
+  background: #f0f0f0;
+  border-radius: 16px;
+  padding: 5px 10px;
+  margin: 2px;
+  display: inline-block;
+  color: black;
+}
+
+.modal-body p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.moves-list {
+  max-height: 20px; /* Set the max height for the moves list */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd; /* Optional: Add a border for better visual separation */
+  padding: 10px; /* Optional: Add padding */
+}
+
+.move-item {
+  width: 100%;
+  text-align: center;
+}
+.moves-list p {
+  font-size: 20px;
+  text-align: center;
+}

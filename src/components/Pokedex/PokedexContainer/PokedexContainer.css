@@ -14,8 +14,9 @@
 }
 
 .pokemon-list-container {
-  height: 600px;
+  height: 650px;
   display: flex;
+
   /* border: 10px solid black; */
 }
 
