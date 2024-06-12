@@ -7,6 +7,7 @@ import { Outlet } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import PokedexNavigation from '../PokedexNavigation/PokedexNavigation';
 import PaginationControls from '../PaginationControls';
+import './PokedexContainer.css';
 
 function PokedexContainer() {
   // Define useState Variables.
@@ -196,26 +197,28 @@ function PokedexContainer() {
       />
       {Object.keys(displayedPokeData).length !== 0 ? (
         <>
-          <PokemonList
-            filter={filter}
-            typeFilter={typeFilter}
-            pokeData={displayedPokeData}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
-            handlePokemonCardOpen={handlePokemonCardOpen}
-          />
+          <div className='pokemon-list-container'>
+            <PokemonList
+              filter={filter}
+              typeFilter={typeFilter}
+              pokeData={displayedPokeData}
+              isChecked={isChecked}
+              setIsChecked={setIsChecked}
+              handlePokemonCardOpen={handlePokemonCardOpen}
+            />
 
-          <PaginationControls
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPokemons={totalPokemons}
-            pokemonsPerPage={pokemonsPerPage}
-          />
+            <PaginationControls
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPokemons={totalPokemons}
+              pokemonsPerPage={pokemonsPerPage}
+            />
+          </div>
         </>
       ) : (
-        <Box>
-          <Typography>Loading Pokedex</Typography>
-          <CircularProgress color='inherit' />
+        <Box className='loading-container'>
+          <div className='pokeball'></div>
+          <div className='loading-text'>Loading</div>
         </Box>
       )}
 
