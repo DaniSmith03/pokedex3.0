@@ -24,6 +24,7 @@ function PaginationControls({
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
       <Button
+        sx={{ backgroundColor: 'red' }}
         variant='contained'
         onClick={handlePreviousPage}
         disabled={currentPage === 1}
@@ -34,6 +35,7 @@ function PaginationControls({
         Page {currentPage} of {totalPages}
       </Typography>
       <Button
+        sx={{ backgroundColor: 'red' }}
         variant='contained'
         onClick={handleNextPage}
         disabled={currentPage === totalPages}

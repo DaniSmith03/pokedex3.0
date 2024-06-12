@@ -197,15 +197,28 @@ function PokedexContainer() {
       />
       {Object.keys(displayedPokeData).length !== 0 ? (
         <>
-          <div className='pokemon-list-container'>
-            <PokemonList
-              filter={filter}
-              typeFilter={typeFilter}
-              pokeData={displayedPokeData}
-              isChecked={isChecked}
-              setIsChecked={setIsChecked}
-              handlePokemonCardOpen={handlePokemonCardOpen}
-            />
+          <div className='pokedex-container'>
+            <div className='pokemon-list-container'>
+              <div className='box1'>
+                <PokemonList
+                  filter={filter}
+                  typeFilter={typeFilter}
+                  pokeData={displayedPokeData}
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
+                  handlePokemonCardOpen={handlePokemonCardOpen}
+                />
+              </div>
+              <div className='box2'>
+                {pokeDetails !== null && (
+                  <PokemonCard
+                    pokemonCardOpen={pokemonCardOpen}
+                    setPokemonCardOpen={setPokemonCardOpen}
+                    pokeDetails={pokeDetails}
+                  />
+                )}
+              </div>
+            </div>
 
             <PaginationControls
               currentPage={currentPage}
@@ -220,14 +233,6 @@ function PokedexContainer() {
           <div className='pokeball'></div>
           <div className='loading-text'>Loading</div>
         </Box>
-      )}
-
-      {pokeDetails !== null && (
-        <PokemonCard
-          pokemonCardOpen={pokemonCardOpen}
-          setPokemonCardOpen={setPokemonCardOpen}
-          pokeDetails={pokeDetails}
-        />
       )}
 
       <Outlet />
