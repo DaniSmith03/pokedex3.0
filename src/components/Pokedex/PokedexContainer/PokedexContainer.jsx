@@ -6,15 +6,21 @@ import PokemonCard from '../PokemonCard/PokemonCard';
 import { Outlet } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import PokedexNavigation from '../PokedexNavigation/PokedexNavigation';
+import PaginationControls from '../PaginationControls';
 
 function PokedexContainer() {
-  //Define useState Variables.
-  const [pokeData, SetPokeData] = useState({});
+  // Define useState Variables.
+  const [allPokeData, setAllPokeData] = useState([]); // All Pokémon data
+  const [filteredPokeData, setFilteredPokeData] = useState([]); // Filtered Pokémon data
+  const [displayedPokeData, setDisplayedPokeData] = useState([]); // Displayed Pokémon data (after pagination)
   const [pokeDetails, setPokeDetails] = useState(null);
   const [filter, setFilter] = useState('');
-  const [typeFilter, setTypeFilter] = [];
+  const [typeFilter, setTypeFilter] = useState([]);
   const [pokemonCardOpen, setPokemonCardOpen] = useState(false);
-  const [loadNum, setLoadNum] = useState(900);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(20);
+  const [totalPokemons, setTotalPokemons] = useState(0);
+
   const [isChecked, setIsChecked] = useState({
     normal: false,
     fighting: false,
@@ -39,143 +45,142 @@ function PokedexContainer() {
   });
 
   useEffect(() => {
-    //initialize an object to store pokemon data we want to extract
-    const pokemonDetailsObj = {};
+    // Fetch all Pokémon data initially
+    const fetchAllPokemonData = async () => {
+      let allPokemonDetailsObj = [];
+      let offset = 0;
+      const limit = 200; // Adjust the limit based on API rate limits and performance considerations
 
-    //API call to Pokemon API to get information from the server listed in the results object of the data object is an array of pokemon names and urls based on the number specified in the query as "limit" Store this information in pokemonDetailsObj
+      while (true) {
+        const response = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+        );
+        const pokemonDataObj = response.data.results;
 
-    const getTheData = async () => {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?limit=${loadNum}`
-      );
-      const pokemonDataObj = response.data.results;
+        if (pokemonDataObj.length === 0) break;
 
-      //Promise All used to make a promise chain that maps through the array of pokemonDetailsObj takes the name key from each obj and makes a new API call to get pokemon objects containing details using the pokemon name returned in an array
-      const details = await Promise.all(
-        pokemonDataObj.map((pokemon) => {
-          return axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
-        })
-      );
-      //   console.log(details);
-
-      details.forEach((poke, index) => {
-        //Extract and Set Pokemon Type Details to an array with the type details
-        const nameType = poke.data.types.map((item) => {
-          const { type } = item;
-          const { name } = type;
-          return name;
-        });
-
-        //Extract and set Pokemon ability Details to an array with the ability details
-        const nameAbility = poke.data.abilities.map((item) => {
-          const { ability } = item;
-          const { name } = ability;
-          return name;
-        });
-
-        //Extract and set Pokemon move Details to an array with the move details
-        const nameMoves = poke.data.moves.map((item) => {
-          const { move } = item;
-          const { name } = move;
-          return name;
-        });
-
-        //Extracts and set Pokemon base stat details to an array of objects each object being a key value pair of the status name and the matching value
-        const statData = poke.data.stats.map((item) => {
-          const statsObj = {};
-          const { stat } = item;
-          const { name } = stat;
-          const statusName = String(name);
-          const { base_stat } = item;
-
-          statsObj[statusName] = base_stat;
-          return statsObj;
-        });
-
-        //Extract and set first video game title appearance.
-        const gameIntro = poke.data.game_indices.slice(0, 3).map((item) => {
-          const { version } = item;
-          const { name } = version;
-          return name;
-        });
-
-        //Create Pokemon Object with all of the Pokemon Details. Deconstructed set that object to the state pokeData
-        pokemonDetailsObj[index + 1] = {
-          id: [index + 1],
-          name: poke.data.name,
-          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            index + 1
-          }.png`,
-          types: nameType,
-          height: poke.data.height,
-          weight: poke.data.weight,
-          abilities: nameAbility,
-          moves: nameMoves,
-          stats: statData,
-          gen: gameIntro,
-        };
-        // console.log(pokemonDetailsObj);
-        return pokemonDetailsObj;
-      });
-      const moreDetails = await Promise.all(
-        pokemonDataObj.map(async (pokemon) => {
-          try {
-            const response = await axios.get(
-              `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
+        // Fetch details for each Pokémon
+        const details = await Promise.all(
+          pokemonDataObj.map((pokemon) => {
+            return axios.get(
+              `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
             );
-            return response.data; // Assuming you want to return the data
-          } catch (error) {
-            console.error(
-              `Error fetching data for ${pokemon.name}: ${error.message}`
-            );
-            return null; // or handle the error in another way, e.g., return a default value
-          }
-        })
-      );
+          })
+        );
 
-      // Filter out the null values (failed requests)
-      const successfulResponses = moreDetails.filter((data) => data !== null);
+        details.forEach((poke) => {
+          const nameType = poke.data.types.map((item) => {
+            const { type } = item;
+            const { name } = type;
+            return name;
+          });
 
-      console.log(successfulResponses);
+          const nameAbility = poke.data.abilities.map((item) => {
+            const { ability } = item;
+            const { name } = ability;
+            return name;
+          });
 
-      successfulResponses.forEach((poke, index) => {
-        let description;
-        poke.flavor_text_entries
-          ? (description = poke.flavor_text_entries[0].flavor_text)
-          : (description = 'No Description Available');
-        // console.log(description);
+          const nameMoves = poke.data.moves.map((item) => {
+            const { move } = item;
+            const { name } = move;
+            return name;
+          });
 
-        let evolvesFrom;
-        poke.evolves_from_species
-          ? (evolvesFrom = poke.evolves_from_species.name)
-          : (evolvesFrom = null);
-        // console.log(evolvesFrom);
+          const statData = poke.data.stats.map((item) => {
+            const statsObj = {};
+            const { stat } = item;
+            const { name } = stat;
+            const statusName = String(name);
+            const { base_stat } = item;
 
-        let habitat;
-        poke.habitat ? (habitat = poke.habitat.name) : (habitat = null);
+            statsObj[statusName] = base_stat;
+            return statsObj;
+          });
 
-        const isMythical = poke.is_mythical;
+          const gameIntro = poke.data.game_indices.slice(0, 3).map((item) => {
+            const { version } = item;
+            const { name } = version;
+            return name;
+          });
 
-        const isLegendary = poke.is_legendary;
+          allPokemonDetailsObj.push({
+            id: poke.data.id,
+            name: poke.data.name,
+            sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke.data.id}.png`,
+            types: nameType,
+            height: poke.data.height,
+            weight: poke.data.weight,
+            abilities: nameAbility,
+            moves: nameMoves,
+            stats: statData,
+            gen: gameIntro,
+          });
+        });
 
-        pokemonDetailsObj[poke.id].description = description;
-        pokemonDetailsObj[poke.id].evolves_from = evolvesFrom;
-        pokemonDetailsObj[poke.id].habitat = habitat;
-        pokemonDetailsObj[poke.id].is_mythical = isMythical;
-        pokemonDetailsObj[poke.id].isLegendary = isLegendary;
-      });
+        offset += limit;
+      }
 
-      SetPokeData(pokemonDetailsObj);
+      setAllPokeData(allPokemonDetailsObj);
     };
-    getTheData();
+
+    fetchAllPokemonData();
   }, []);
-  console.log('hello' + Object.keys(pokeData).length);
-  console.log(pokeData);
+
+  useEffect(() => {
+    // Filter the full dataset
+    const applyFilters = () => {
+      const filteredData = allPokeData.filter((pokemon) => {
+        // Apply name filter
+        if (filter && !pokemon.name.includes(filter)) {
+          return false;
+        }
+
+        // Apply type filter
+        if (
+          typeFilter.length > 0 &&
+          !typeFilter.some((type) => pokemon.types.includes(type))
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+
+      setFilteredPokeData(filteredData);
+      setTotalPokemons(filteredData.length);
+      setCurrentPage(1); // Reset to the first page whenever filters are applied
+    };
+
+    applyFilters();
+  }, [allPokeData, filter, typeFilter]);
+
+  useEffect(() => {
+    // Paginate the filtered results
+    const paginate = () => {
+      const offset = (currentPage - 1) * pokemonsPerPage;
+      const paginatedData = filteredPokeData.slice(
+        offset,
+        offset + pokemonsPerPage
+      );
+      setDisplayedPokeData(paginatedData);
+    };
+
+    paginate();
+  }, [filteredPokeData, currentPage, pokemonsPerPage]);
+
+  useEffect(() => {
+    // Update type filter based on isChecked state
+    const newTypeFilter = Object.keys(isChecked).filter(
+      (key) => isChecked[key]
+    );
+    setTypeFilter(newTypeFilter);
+  }, [isChecked]);
 
   //Pokedex card open function:
-
   const handlePokemonCardOpen = (pokemonId) => {
-    setPokeDetails(pokeData[pokemonId]);
+    const pokemon = allPokeData.find((poke) => poke.id === pokemonId);
+    setPokeDetails(pokemon);
     setPokemonCardOpen(true);
   };
 
@@ -187,24 +192,33 @@ function PokedexContainer() {
         setTypeFilter={setTypeFilter}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
-        setLoadNum={setLoadNum}
+        setPokemonsPerPage={setPokemonsPerPage}
       />
-      {Object.keys(pokeData).length !== 0 ? (
-        <PokemonList
-          filter={filter}
-          typeFilter={typeFilter}
-          pokeData={pokeData}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
-          handlePokemonCardOpen={handlePokemonCardOpen}
-          loadNum={loadNum}
-        />
+      {Object.keys(displayedPokeData).length !== 0 ? (
+        <>
+          <PokemonList
+            filter={filter}
+            typeFilter={typeFilter}
+            pokeData={displayedPokeData}
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+            handlePokemonCardOpen={handlePokemonCardOpen}
+          />
+
+          <PaginationControls
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPokemons={totalPokemons}
+            pokemonsPerPage={pokemonsPerPage}
+          />
+        </>
       ) : (
         <Box>
           <Typography>Loading Pokedex</Typography>
           <CircularProgress color='inherit' />
         </Box>
       )}
+
       {pokeDetails !== null && (
         <PokemonCard
           pokemonCardOpen={pokemonCardOpen}

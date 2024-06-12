@@ -15,7 +15,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import FiltersModal from './FiltersModal';
 
-function PokedexNavigation({ setFilter, isChecked, setIsChecked, setLoadNum }) {
+function PokedexNavigation({
+  setFilter,
+  isChecked,
+  setIsChecked,
+  setPokemonsPerPage,
+}) {
   const handleSearch = (event) => {
     setFilter(lowerFirst(event.target.value));
   };
@@ -56,7 +61,7 @@ function PokedexNavigation({ setFilter, isChecked, setIsChecked, setLoadNum }) {
             setModalOpen={setModalOpen}
             isChecked={isChecked}
             setIsChecked={setIsChecked}
-            setLoadNum={setLoadNum}
+            setPokemonsPerPage={setPokemonsPerPage}
           />
           <Search onChange={handleSearch}>
             <SearchIconWrapper>
