@@ -22,7 +22,7 @@ function PaginationControls({
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
       <Button
         variant='contained'
         onClick={handlePreviousPage}
