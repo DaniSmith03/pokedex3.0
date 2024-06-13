@@ -31,14 +31,14 @@ const NavBar = () => {
               Pokédex
             </Typography>
             <div className='nav-menu'>
-              <Typography
+              {/* <Typography
                 className='nav-links'
                 variant='h6'
                 component={Link}
                 to='/'
               >
                 Home
-              </Typography>
+              </Typography> */}
               <Typography
                 className='nav-links'
                 variant='h6'

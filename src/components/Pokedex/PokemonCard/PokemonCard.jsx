@@ -66,24 +66,26 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
                   </div>
                 )}
               </div>
-              <p>{description}</p>
-              <div className='details'>
-                <div className='detail-item'>
-                  <h3>Height</h3>
-                  <p>{height}</p>
-                </div>
-                <div className='detail-item'>
-                  <h3>Weight</h3>
-                  <p>{weight}</p>
-                </div>
-                <div className='detail-item'>
-                  <h3>Habitat</h3>
-                  <p>{habitat}</p>
+              <div className='details1'>
+                <p>{description}</p>
+                <div className='details'>
+                  <div className='detail-item'>
+                    <h3>Height</h3>
+                    <p>{height} in</p>
+                  </div>
+                  <div className='detail-item'>
+                    <h3>Weight</h3>
+                    <p>{weight} lbs</p>
+                  </div>
+                  <div className='detail-item'>
+                    <h3>Habitat</h3>
+                    <p>{habitat}</p>
+                  </div>
                 </div>
               </div>
-              <div className='details'>
+              <div className='details2'>
                 <div className='detail-item'>
-                  <h3>Types</h3>
+                  <h3>Types:</h3>
                   <div className='types'>
                     {types.map((type) => (
                       <span key={type} className='chip'>
@@ -93,7 +95,7 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
                   </div>
                 </div>
                 <div className='detail-item'>
-                  <h3>Abilities</h3>
+                  <h3>Abilities:</h3>
                   <div className='types'>
                     {abilities.map((ability) => (
                       <span key={ability} className='chip'>
@@ -103,7 +105,7 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
                   </div>
                 </div>
               </div>
-              <div className='details'>
+              <div className='details3'>
                 <div className='detail-item'>
                   <h3>Moves</h3>
                   <div className='moves-list'>
@@ -115,7 +117,7 @@ function PokemonCard({ pokemonCardOpen, setPokemonCardOpen, pokeDetails }) {
                   </div>
                 </div>
               </div>
-              <button className='chip'>Favorite</button>
+              <button>Favorite</button>
             </div>
           </div>
         </div>
