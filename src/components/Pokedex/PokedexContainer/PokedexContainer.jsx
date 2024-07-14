@@ -188,15 +188,15 @@ function PokedexContainer() {
   //JSX to return pokedex elements
   return (
     <>
-      <PokedexNavigation
-        setFilter={setFilter}
-        setTypeFilter={setTypeFilter}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        setPokemonsPerPage={setPokemonsPerPage}
-      />
       {Object.keys(displayedPokeData).length !== 0 ? (
         <>
+          <PokedexNavigation
+            setFilter={setFilter}
+            setTypeFilter={setTypeFilter}
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+            setPokemonsPerPage={setPokemonsPerPage}
+          />
           <div className='pokedex-container'>
             <div className='pokemon-list-container'>
               <div className='box1'>
