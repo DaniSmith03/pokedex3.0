@@ -39,22 +39,22 @@ const NavBar = () => {
               >
                 Home
               </Typography> */}
-              <Typography
+              {/* <Typography
                 className='nav-links'
                 variant='h6'
                 component={Link}
                 to='/pokedex'
               >
                 Pokedex
-              </Typography>
-              <Typography
+              </Typography> */}
+              {/* <Typography
                 className='nav-links'
                 variant='h6'
                 component={Link}
                 to='/profile'
               >
                 Profile
-              </Typography>
+              </Typography> */}
             </div>
           </StyledToolbar>
         </AppBar>
