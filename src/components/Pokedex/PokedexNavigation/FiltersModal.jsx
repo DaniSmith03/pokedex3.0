@@ -74,7 +74,7 @@ function FiltersModal({
             <input
               style={{ textAlign: 'center', fontSize: 20 }}
               type='number'
-              min='25'
+              min='20'
               step='25'
               max='925'
               onChange={handleNumChange}
